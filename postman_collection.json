@@ -1,0 +1,3245 @@
+{
+  "info": {
+    "name": "UniSphere Enterprise University ERP API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "auth": {
+    "type": "bearer",
+    "bearer": [
+      {
+        "key": "token",
+        "value": "{{accessToken}}",
+        "type": "string"
+      }
+    ]
+  },
+  "variable": [
+    {
+      "key": "baseUrl",
+      "value": "http://localhost:4000"
+    },
+    {
+      "key": "accessToken",
+      "value": ""
+    }
+  ],
+  "item": [
+    {
+      "name": "Bootstrap University",
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"bootstrapKey\": \"change-this-bootstrap-key\",\n  \"university\": {\n    \"name\": \"Enterprise University\",\n    \"slug\": \"enterprise-university\",\n    \"code\": \"EU\"\n  },\n  \"admin\": {\n    \"email\": \"admin@enterprise.edu\",\n    \"password\": \"StrongPassword@123\",\n    \"firstName\": \"University\",\n    \"lastName\": \"Administrator\"\n  }\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/auth/bootstrap",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "auth",
+            "bootstrap"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Login",
+      "event": [
+        {
+          "listen": "test",
+          "script": {
+            "exec": [
+              "const json = pm.response.json();",
+              "if (json.data && json.data.tokens) pm.collectionVariables.set('accessToken', json.data.tokens.accessToken);"
+            ]
+          }
+        }
+      ],
+      "request": {
+        "method": "POST",
+        "header": [
+          {
+            "key": "Content-Type",
+            "value": "application/json"
+          }
+        ],
+        "body": {
+          "mode": "raw",
+          "raw": "{\n  \"universitySlug\": \"demo-university\",\n  \"email\": \"admin@demo-university.edu\",\n  \"password\": \"Admin@12345\"\n}"
+        },
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/auth/login",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "auth",
+            "login"
+          ]
+        }
+      }
+    },
+    {
+      "name": "ERP Catalog",
+      "request": {
+        "method": "GET",
+        "header": [],
+        "url": {
+          "raw": "{{baseUrl}}/api/v1/erp/catalog",
+          "host": [
+            "{{baseUrl}}"
+          ],
+          "path": [
+            "api",
+            "v1",
+            "erp",
+            "catalog"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Platform & Subscription",
+      "item": [
+        {
+          "name": "List Universities",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/erp/platform/universities",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "erp",
+                "platform",
+                "universities"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Universities",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": {\n    \"name\": \"sample\",\n    \"slug\": \"sample\",\n    \"code\": \"sample\"\n  }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/erp/platform/universities",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "erp",
+                "platform",
+                "universities"
+              ]
+            }
+          }
+        },
+        {
+          "name": "List Subscriptions",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/erp/platform/subscriptions",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "erp",
+                "platform",
+                "subscriptions"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Subscriptions",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": {\n    \"plan\": \"sample\",\n    \"startsAt\": \"64f000000000000000000001\"\n  }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/erp/platform/subscriptions",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "erp",
+                "platform",
+                "subscriptions"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Authentication & Security",
+      "item": [
+        {
+          "name": "List Sessions",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/erp/security/sessions",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "erp",
+                "security",
+                "sessions"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Sessions",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": {\n    \"userId\": \"64f000000000000000000001\",\n    \"sessionId\": \"sample\",\n    \"expiresAt\": \"64f000000000000000000001\"\n  }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/erp/security/sessions",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "erp",
+                "security",
+                "sessions"
+              ]
+            }
+          }
+        },
+        {
+          "name": "List MFA Configurations",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/erp/security/mfa-configurations",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "erp",
+                "security",
+                "mfa-configurations"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create MFA Configurations",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": {\n    \"userId\": \"64f000000000000000000001\",\n    \"method\": \"sample\"\n  }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/erp/security/mfa-configurations",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "erp",
+                "security",
+                "mfa-configurations"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Users, Roles & Permissions",
+      "item": [
+        {
+          "name": "List User Invitations",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/erp/iam/invitations",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "erp",
+                "iam",
+                "invitations"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create User Invitations",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": {\n    \"email\": \"sample\",\n    \"roleKey\": \"sample\",\n    \"expiresAt\": \"64f000000000000000000001\"\n  }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/erp/iam/invitations",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "erp",
+                "iam",
+                "invitations"
+              ]
+            }
+          }
+        },
+        {
+          "name": "List Role Delegations",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/erp/iam/delegations",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "erp",
+                "iam",
+                "delegations"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Role Delegations",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": {\n    \"fromUserId\": \"64f000000000000000000001\",\n    \"toUserId\": \"64f000000000000000000001\",\n    \"roleAssignmentId\": \"64f000000000000000000001\",\n    \"effectiveFrom\": \"64f000000000000000000001\",\n    \"effectiveUntil\": \"64f000000000000000000001\",\n    \"reason\": \"sample\"\n  }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/erp/iam/delegations",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "erp",
+                "iam",
+                "delegations"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "University & Campus Structure",
+      "item": [
+        {
+          "name": "List Campuses",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/erp/institution/campuses",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "erp",
+                "institution",
+                "campuses"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Campuses",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": {\n    \"name\": \"sample\",\n    \"code\": \"sample\"\n  }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/erp/institution/campuses",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "erp",
+                "institution",
+                "campuses"
+              ]
+            }
+          }
+        },
+        {
+          "name": "List Schools / Faculties",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/erp/institution/schools",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "erp",
+                "institution",
+                "schools"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Schools / Faculties",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": {\n    \"name\": \"sample\",\n    \"code\": \"sample\",\n    \"campusId\": \"64f000000000000000000001\"\n  }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/erp/institution/schools",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "erp",
+                "institution",
+                "schools"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Admissions",
+      "item": [
+        {
+          "name": "List Admission Cycles",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/erp/admissions/admission-cycles",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "erp",
+                "admissions",
+                "admission-cycles"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Admission Cycles",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": {\n    \"name\": \"sample\",\n    \"academicYearId\": \"64f000000000000000000001\",\n    \"programIds\": [],\n    \"opensAt\": \"64f000000000000000000001\",\n    \"closesAt\": \"64f000000000000000000001\"\n  }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/erp/admissions/admission-cycles",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "erp",
+                "admissions",
+                "admission-cycles"
+              ]
+            }
+          }
+        },
+        {
+          "name": "List Applications",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/erp/admissions/applications",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "erp",
+                "admissions",
+                "applications"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Applications",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": {\n    \"applicationNo\": \"sample\",\n    \"applicantUserId\": \"64f000000000000000000001\",\n    \"cycleId\": \"64f000000000000000000001\",\n    \"programId\": \"64f000000000000000000001\",\n    \"campusId\": \"64f000000000000000000001\",\n    \"personalDetails\": {},\n    \"academicDetails\": {}\n  }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/erp/admissions/applications",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "erp",
+                "admissions",
+                "applications"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Student Information System",
+      "item": [
+        {
+          "name": "List Student Profiles",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/erp/students/student-profiles",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "erp",
+                "students",
+                "student-profiles"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Student Profiles",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": {\n    \"studentNo\": \"sample\",\n    \"userId\": \"64f000000000000000000001\",\n    \"programId\": \"64f000000000000000000001\",\n    \"campusId\": \"64f000000000000000000001\",\n    \"admissionYear\": 1\n  }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/erp/students/student-profiles",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "erp",
+                "students",
+                "student-profiles"
+              ]
+            }
+          }
+        },
+        {
+          "name": "List Guardians",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/erp/students/guardians",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "erp",
+                "students",
+                "guardians"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Guardians",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": {\n    \"studentId\": \"64f000000000000000000001\",\n    \"name\": \"sample\",\n    \"relationship\": \"sample\",\n    \"contact\": {}\n  }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/erp/students/guardians",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "erp",
+                "students",
+                "guardians"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Academic Governance",
+      "item": [
+        {
+          "name": "List Academic Regulations",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/erp/academics/regulations",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "erp",
+                "academics",
+                "regulations"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Academic Regulations",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": {\n    \"name\": \"sample\"\n  }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/erp/academics/regulations",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "erp",
+                "academics",
+                "regulations"
+              ]
+            }
+          }
+        },
+        {
+          "name": "List Academic Calendars",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/erp/academics/academic-calendars",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "erp",
+                "academics",
+                "academic-calendars"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Academic Calendars",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": {\n    \"name\": \"sample\",\n    \"academicYearId\": \"64f000000000000000000001\",\n    \"events\": []\n  }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/erp/academics/academic-calendars",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "erp",
+                "academics",
+                "academic-calendars"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Curriculum & Syllabus",
+      "item": [
+        {
+          "name": "List Curricula",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/erp/curriculum/curricula",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "erp",
+                "curriculum",
+                "curricula"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Curricula",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": {\n    \"name\": \"sample\",\n    \"programId\": \"64f000000000000000000001\",\n    \"version\": \"sample\",\n    \"effectiveAcademicYearId\": \"64f000000000000000000001\"\n  }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/erp/curriculum/curricula",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "erp",
+                "curriculum",
+                "curricula"
+              ]
+            }
+          }
+        },
+        {
+          "name": "List Curriculum Courses",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/erp/curriculum/curriculum-courses",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "erp",
+                "curriculum",
+                "curriculum-courses"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Curriculum Courses",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": {\n    \"curriculumId\": \"64f000000000000000000001\",\n    \"courseId\": \"64f000000000000000000001\",\n    \"termSequence\": 1,\n    \"credits\": 1\n  }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/erp/curriculum/curriculum-courses",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "erp",
+                "curriculum",
+                "curriculum-courses"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Courses & Offerings",
+      "item": [
+        {
+          "name": "List Course Catalogue",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/erp/courses/course-catalog",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "erp",
+                "courses",
+                "course-catalog"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Course Catalogue",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": {\n    \"code\": \"sample\",\n    \"name\": \"sample\",\n    \"departmentId\": \"64f000000000000000000001\",\n    \"credits\": 1\n  }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/erp/courses/course-catalog",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "erp",
+                "courses",
+                "course-catalog"
+              ]
+            }
+          }
+        },
+        {
+          "name": "List Course Offerings",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/erp/courses/course-offerings",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "erp",
+                "courses",
+                "course-offerings"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Course Offerings",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": {\n    \"courseId\": \"64f000000000000000000001\",\n    \"termId\": \"64f000000000000000000001\",\n    \"campusId\": \"64f000000000000000000001\",\n    \"departmentId\": \"64f000000000000000000001\"\n  }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/erp/courses/course-offerings",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "erp",
+                "courses",
+                "course-offerings"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Enrollment & Registration",
+      "item": [
+        {
+          "name": "List Enrollments",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/erp/enrollment/enrollments",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "erp",
+                "enrollment",
+                "enrollments"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Enrollments",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": {\n    \"studentId\": \"64f000000000000000000001\",\n    \"programId\": \"64f000000000000000000001\",\n    \"academicYearId\": \"64f000000000000000000001\",\n    \"enrollmentNo\": \"sample\"\n  }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/erp/enrollment/enrollments",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "erp",
+                "enrollment",
+                "enrollments"
+              ]
+            }
+          }
+        },
+        {
+          "name": "List Course Registrations",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/erp/enrollment/course-registrations",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "erp",
+                "enrollment",
+                "course-registrations"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Course Registrations",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": {\n    \"studentId\": \"64f000000000000000000001\",\n    \"courseOfferingId\": \"64f000000000000000000001\"\n  }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/erp/enrollment/course-registrations",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "erp",
+                "enrollment",
+                "course-registrations"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Timetable & Scheduling",
+      "item": [
+        {
+          "name": "List Timetables",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/erp/timetable/timetables",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "erp",
+                "timetable",
+                "timetables"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Timetables",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": {\n    \"name\": \"sample\",\n    \"termId\": \"64f000000000000000000001\"\n  }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/erp/timetable/timetables",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "erp",
+                "timetable",
+                "timetables"
+              ]
+            }
+          }
+        },
+        {
+          "name": "List Timetable Slots",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/erp/timetable/timetable-slots",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "erp",
+                "timetable",
+                "timetable-slots"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Timetable Slots",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": {\n    \"timetableId\": \"64f000000000000000000001\",\n    \"courseOfferingId\": \"64f000000000000000000001\",\n    \"facultyId\": \"64f000000000000000000001\",\n    \"roomId\": \"64f000000000000000000001\",\n    \"dayOfWeek\": 1\n  }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/erp/timetable/timetable-slots",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "erp",
+                "timetable",
+                "timetable-slots"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Attendance & Leave",
+      "item": [
+        {
+          "name": "List Attendance Sessions",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/erp/attendance/attendance-sessions",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "erp",
+                "attendance",
+                "attendance-sessions"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Attendance Sessions",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": {\n    \"courseOfferingId\": \"64f000000000000000000001\",\n    \"facultyId\": \"64f000000000000000000001\",\n    \"date\": \"64f000000000000000000001\"\n  }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/erp/attendance/attendance-sessions",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "erp",
+                "attendance",
+                "attendance-sessions"
+              ]
+            }
+          }
+        },
+        {
+          "name": "List Attendance Records",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/erp/attendance/attendance-records",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "erp",
+                "attendance",
+                "attendance-records"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Attendance Records",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": {\n    \"sessionId\": \"64f000000000000000000001\",\n    \"studentId\": \"64f000000000000000000001\",\n    \"status\": \"sample\"\n  }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/erp/attendance/attendance-records",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "erp",
+                "attendance",
+                "attendance-records"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Learning Management System",
+      "item": [
+        {
+          "name": "List Course Spaces",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/erp/lms/course-spaces",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "erp",
+                "lms",
+                "course-spaces"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Course Spaces",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": {\n    \"courseOfferingId\": \"64f000000000000000000001\",\n    \"name\": \"sample\"\n  }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/erp/lms/course-spaces",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "erp",
+                "lms",
+                "course-spaces"
+              ]
+            }
+          }
+        },
+        {
+          "name": "List Lessons",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/erp/lms/lessons",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "erp",
+                "lms",
+                "lessons"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Lessons",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": {\n    \"courseSpaceId\": \"64f000000000000000000001\",\n    \"title\": \"sample\",\n    \"content\": {}\n  }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/erp/lms/lessons",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "erp",
+                "lms",
+                "lessons"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Examinations",
+      "item": [
+        {
+          "name": "List Exam Cycles",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/erp/examinations/exam-cycles",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "erp",
+                "examinations",
+                "exam-cycles"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Exam Cycles",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": {\n    \"name\": \"sample\",\n    \"termId\": \"64f000000000000000000001\",\n    \"examType\": \"sample\",\n    \"startsAt\": \"64f000000000000000000001\",\n    \"endsAt\": \"64f000000000000000000001\"\n  }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/erp/examinations/exam-cycles",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "erp",
+                "examinations",
+                "exam-cycles"
+              ]
+            }
+          }
+        },
+        {
+          "name": "List Exam Schedules",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/erp/examinations/exam-schedules",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "erp",
+                "examinations",
+                "exam-schedules"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Exam Schedules",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": {\n    \"examCycleId\": \"64f000000000000000000001\",\n    \"courseOfferingId\": \"64f000000000000000000001\",\n    \"examDate\": \"64f000000000000000000001\"\n  }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/erp/examinations/exam-schedules",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "erp",
+                "examinations",
+                "exam-schedules"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Evaluation, Grading & Results",
+      "item": [
+        {
+          "name": "List Mark Sheets",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/erp/results/mark-sheets",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "erp",
+                "results",
+                "mark-sheets"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Mark Sheets",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": {\n    \"examScheduleId\": \"64f000000000000000000001\",\n    \"courseOfferingId\": \"64f000000000000000000001\",\n    \"evaluatorId\": \"64f000000000000000000001\",\n    \"entries\": [],\n    \"maxMarks\": 1\n  }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/erp/results/mark-sheets",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "erp",
+                "results",
+                "mark-sheets"
+              ]
+            }
+          }
+        },
+        {
+          "name": "List Evaluations",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/erp/results/evaluations",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "erp",
+                "results",
+                "evaluations"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Evaluations",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": {\n    \"answerScriptId\": \"64f000000000000000000001\",\n    \"evaluatorId\": \"64f000000000000000000001\",\n    \"studentId\": \"64f000000000000000000001\",\n    \"marks\": {}\n  }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/erp/results/evaluations",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "erp",
+                "results",
+                "evaluations"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Student Fees & Accounts",
+      "item": [
+        {
+          "name": "List Fee Structures",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/erp/student-finance/fee-structures",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "erp",
+                "student-finance",
+                "fee-structures"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Fee Structures",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": {\n    \"name\": \"sample\",\n    \"academicYearId\": \"64f000000000000000000001\",\n    \"components\": [],\n    \"currency\": \"sample\"\n  }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/erp/student-finance/fee-structures",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "erp",
+                "student-finance",
+                "fee-structures"
+              ]
+            }
+          }
+        },
+        {
+          "name": "List Student Invoices",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/erp/student-finance/student-invoices",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "erp",
+                "student-finance",
+                "student-invoices"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Student Invoices",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": {\n    \"invoiceNo\": \"sample\",\n    \"studentId\": \"64f000000000000000000001\",\n    \"items\": []\n  }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/erp/student-finance/student-invoices",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "erp",
+                "student-finance",
+                "student-invoices"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Finance & Accounting",
+      "item": [
+        {
+          "name": "List Ledgers",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/erp/accounting/ledgers",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "erp",
+                "accounting",
+                "ledgers"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Ledgers",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": {\n    \"code\": \"sample\",\n    \"name\": \"sample\",\n    \"type\": \"sample\",\n    \"currency\": \"sample\"\n  }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/erp/accounting/ledgers",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "erp",
+                "accounting",
+                "ledgers"
+              ]
+            }
+          }
+        },
+        {
+          "name": "List Journal Entries",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/erp/accounting/journal-entries",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "erp",
+                "accounting",
+                "journal-entries"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Journal Entries",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": {\n    \"journalNo\": \"sample\",\n    \"entryDate\": \"64f000000000000000000001\",\n    \"lines\": []\n  }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/erp/accounting/journal-entries",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "erp",
+                "accounting",
+                "journal-entries"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Scholarships & Concessions",
+      "item": [
+        {
+          "name": "List Scholarship Schemes",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/erp/scholarships/schemes",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "erp",
+                "scholarships",
+                "schemes"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Scholarship Schemes",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": {\n    \"name\": \"sample\",\n    \"code\": \"sample\",\n    \"eligibilityRules\": {}\n  }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/erp/scholarships/schemes",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "erp",
+                "scholarships",
+                "schemes"
+              ]
+            }
+          }
+        },
+        {
+          "name": "List Scholarship Applications",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/erp/scholarships/applications",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "erp",
+                "scholarships",
+                "applications"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Scholarship Applications",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": {\n    \"studentId\": \"64f000000000000000000001\",\n    \"schemeId\": \"64f000000000000000000001\",\n    \"academicYearId\": \"64f000000000000000000001\"\n  }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/erp/scholarships/applications",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "erp",
+                "scholarships",
+                "applications"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Human Resources",
+      "item": [
+        {
+          "name": "List Employee Profiles",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/erp/hr/employee-profiles",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "erp",
+                "hr",
+                "employee-profiles"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Employee Profiles",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": {\n    \"employeeNo\": \"sample\",\n    \"userId\": \"64f000000000000000000001\",\n    \"departmentId\": \"64f000000000000000000001\",\n    \"designation\": \"sample\",\n    \"joiningDate\": \"64f000000000000000000001\"\n  }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/erp/hr/employee-profiles",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "erp",
+                "hr",
+                "employee-profiles"
+              ]
+            }
+          }
+        },
+        {
+          "name": "List Job Positions",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/erp/hr/job-positions",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "erp",
+                "hr",
+                "job-positions"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Job Positions",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": {\n    \"title\": \"sample\",\n    \"departmentId\": \"64f000000000000000000001\"\n  }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/erp/hr/job-positions",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "erp",
+                "hr",
+                "job-positions"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Payroll",
+      "item": [
+        {
+          "name": "List Salary Structures",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/erp/payroll/salary-structures",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "erp",
+                "payroll",
+                "salary-structures"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Salary Structures",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": {\n    \"name\": \"sample\",\n    \"components\": [],\n    \"currency\": \"sample\",\n    \"effectiveFrom\": \"64f000000000000000000001\"\n  }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/erp/payroll/salary-structures",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "erp",
+                "payroll",
+                "salary-structures"
+              ]
+            }
+          }
+        },
+        {
+          "name": "List Payroll Runs",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/erp/payroll/payroll-runs",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "erp",
+                "payroll",
+                "payroll-runs"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Payroll Runs",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": {\n    \"name\": \"sample\",\n    \"periodFrom\": \"64f000000000000000000001\",\n    \"periodTo\": \"64f000000000000000000001\"\n  }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/erp/payroll/payroll-runs",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "erp",
+                "payroll",
+                "payroll-runs"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Leave, Attendance & Performance",
+      "item": [
+        {
+          "name": "List Employee Attendance",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/erp/workforce/employee-attendance",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "erp",
+                "workforce",
+                "employee-attendance"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Employee Attendance",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": {\n    \"employeeId\": \"64f000000000000000000001\",\n    \"date\": \"64f000000000000000000001\"\n  }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/erp/workforce/employee-attendance",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "erp",
+                "workforce",
+                "employee-attendance"
+              ]
+            }
+          }
+        },
+        {
+          "name": "List Leave Requests",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/erp/workforce/leave-requests",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "erp",
+                "workforce",
+                "leave-requests"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Leave Requests",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": {\n    \"employeeId\": \"64f000000000000000000001\",\n    \"leaveType\": \"sample\",\n    \"fromDate\": \"64f000000000000000000001\",\n    \"toDate\": \"64f000000000000000000001\",\n    \"reason\": \"sample\"\n  }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/erp/workforce/leave-requests",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "erp",
+                "workforce",
+                "leave-requests"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Library",
+      "item": [
+        {
+          "name": "List Catalogue Items",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/erp/library/catalog-items",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "erp",
+                "library",
+                "catalog-items"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Catalogue Items",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": {\n    \"title\": \"sample\"\n  }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/erp/library/catalog-items",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "erp",
+                "library",
+                "catalog-items"
+              ]
+            }
+          }
+        },
+        {
+          "name": "List Item Copies",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/erp/library/copies",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "erp",
+                "library",
+                "copies"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Item Copies",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": {\n    \"catalogItemId\": \"64f000000000000000000001\",\n    \"barcode\": \"sample\"\n  }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/erp/library/copies",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "erp",
+                "library",
+                "copies"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Hostel",
+      "item": [
+        {
+          "name": "List Hostels",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/erp/hostel/hostels",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "erp",
+                "hostel",
+                "hostels"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Hostels",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": {\n    \"name\": \"sample\",\n    \"campusId\": \"64f000000000000000000001\"\n  }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/erp/hostel/hostels",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "erp",
+                "hostel",
+                "hostels"
+              ]
+            }
+          }
+        },
+        {
+          "name": "List Hostel Rooms",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/erp/hostel/rooms",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "erp",
+                "hostel",
+                "rooms"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Hostel Rooms",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": {\n    \"hostelId\": \"64f000000000000000000001\",\n    \"roomNo\": \"sample\",\n    \"capacity\": 1\n  }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/erp/hostel/rooms",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "erp",
+                "hostel",
+                "rooms"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Transport",
+      "item": [
+        {
+          "name": "List Vehicles",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/erp/transport/vehicles",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "erp",
+                "transport",
+                "vehicles"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Vehicles",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": {\n    \"registrationNo\": \"sample\",\n    \"capacity\": 1\n  }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/erp/transport/vehicles",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "erp",
+                "transport",
+                "vehicles"
+              ]
+            }
+          }
+        },
+        {
+          "name": "List Routes",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/erp/transport/routes",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "erp",
+                "transport",
+                "routes"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Routes",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": {\n    \"name\": \"sample\",\n    \"code\": \"sample\",\n    \"campusId\": \"64f000000000000000000001\"\n  }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/erp/transport/routes",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "erp",
+                "transport",
+                "routes"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Procurement & Inventory",
+      "item": [
+        {
+          "name": "List Purchase Requests",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/erp/procurement/purchase-requests",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "erp",
+                "procurement",
+                "purchase-requests"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Purchase Requests",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": {\n    \"requestNo\": \"sample\",\n    \"requesterId\": \"64f000000000000000000001\",\n    \"departmentId\": \"64f000000000000000000001\",\n    \"items\": [],\n    \"businessJustification\": \"sample\"\n  }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/erp/procurement/purchase-requests",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "erp",
+                "procurement",
+                "purchase-requests"
+              ]
+            }
+          }
+        },
+        {
+          "name": "List Quotations",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/erp/procurement/quotations",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "erp",
+                "procurement",
+                "quotations"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Quotations",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": {\n    \"purchaseRequestId\": \"64f000000000000000000001\",\n    \"vendorId\": \"64f000000000000000000001\",\n    \"items\": [],\n    \"total\": 1\n  }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/erp/procurement/quotations",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "erp",
+                "procurement",
+                "quotations"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Assets & Facilities",
+      "item": [
+        {
+          "name": "List Assets",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/erp/facilities/assets",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "erp",
+                "facilities",
+                "assets"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Assets",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": {\n    \"assetTag\": \"sample\",\n    \"name\": \"sample\"\n  }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/erp/facilities/assets",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "erp",
+                "facilities",
+                "assets"
+              ]
+            }
+          }
+        },
+        {
+          "name": "List Maintenance Requests",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/erp/facilities/maintenance-requests",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "erp",
+                "facilities",
+                "maintenance-requests"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Maintenance Requests",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": {\n    \"reportedBy\": \"64f000000000000000000001\",\n    \"issue\": \"sample\"\n  }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/erp/facilities/maintenance-requests",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "erp",
+                "facilities",
+                "maintenance-requests"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Research & Grants",
+      "item": [
+        {
+          "name": "List Research Proposals",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/erp/research/proposals",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "erp",
+                "research",
+                "proposals"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Research Proposals",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": {\n    \"title\": \"sample\",\n    \"principalInvestigatorId\": \"64f000000000000000000001\",\n    \"departmentId\": \"64f000000000000000000001\",\n    \"abstract\": \"sample\"\n  }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/erp/research/proposals",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "erp",
+                "research",
+                "proposals"
+              ]
+            }
+          }
+        },
+        {
+          "name": "List Research Projects",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/erp/research/projects",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "erp",
+                "research",
+                "projects"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Research Projects",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": {\n    \"title\": \"sample\",\n    \"principalInvestigatorId\": \"64f000000000000000000001\",\n    \"startsAt\": \"64f000000000000000000001\"\n  }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/erp/research/projects",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "erp",
+                "research",
+                "projects"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Placement & Career Services",
+      "item": [
+        {
+          "name": "List Employers",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/erp/placement/employers",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "erp",
+                "placement",
+                "employers"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Employers",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": {\n    \"name\": \"sample\"\n  }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/erp/placement/employers",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "erp",
+                "placement",
+                "employers"
+              ]
+            }
+          }
+        },
+        {
+          "name": "List Placement Drives",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/erp/placement/drives",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "erp",
+                "placement",
+                "drives"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Placement Drives",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": {\n    \"name\": \"sample\",\n    \"employerId\": \"64f000000000000000000001\",\n    \"academicYearId\": \"64f000000000000000000001\",\n    \"eligibilityRules\": {}\n  }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/erp/placement/drives",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "erp",
+                "placement",
+                "drives"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Alumni",
+      "item": [
+        {
+          "name": "List Alumni Profiles",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/erp/alumni/alumni-profiles",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "erp",
+                "alumni",
+                "alumni-profiles"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Alumni Profiles",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": {\n    \"studentId\": \"64f000000000000000000001\",\n    \"graduationYear\": 1,\n    \"programId\": \"64f000000000000000000001\"\n  }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/erp/alumni/alumni-profiles",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "erp",
+                "alumni",
+                "alumni-profiles"
+              ]
+            }
+          }
+        },
+        {
+          "name": "List Alumni Chapters",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/erp/alumni/chapters",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "erp",
+                "alumni",
+                "chapters"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Alumni Chapters",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": {\n    \"name\": \"sample\"\n  }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/erp/alumni/chapters",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "erp",
+                "alumni",
+                "chapters"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Communication, Grievance & Support",
+      "item": [
+        {
+          "name": "List Announcements",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/erp/engagement/announcements",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "erp",
+                "engagement",
+                "announcements"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Announcements",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": {\n    \"title\": \"sample\",\n    \"message\": \"sample\",\n    \"audience\": {}\n  }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/erp/engagement/announcements",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "erp",
+                "engagement",
+                "announcements"
+              ]
+            }
+          }
+        },
+        {
+          "name": "List Notifications",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/erp/engagement/notifications",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "erp",
+                "engagement",
+                "notifications"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Notifications",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": {\n    \"userId\": \"64f000000000000000000001\",\n    \"message\": \"sample\"\n  }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/erp/engagement/notifications",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "erp",
+                "engagement",
+                "notifications"
+              ]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "Analytics, Audit, Settings & Integrations",
+      "item": [
+        {
+          "name": "List Settings",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/erp/governance/settings",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "erp",
+                "governance",
+                "settings"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Settings",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": {\n    \"key\": \"sample\",\n    \"value\": {}\n  }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/erp/governance/settings",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "erp",
+                "governance",
+                "settings"
+              ]
+            }
+          }
+        },
+        {
+          "name": "List Integrations",
+          "request": {
+            "method": "GET",
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/erp/governance/integrations",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "erp",
+                "governance",
+                "integrations"
+              ]
+            }
+          }
+        },
+        {
+          "name": "Create Integrations",
+          "request": {
+            "method": "POST",
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"data\": {\n    \"name\": \"sample\",\n    \"type\": \"sample\"\n  }\n}"
+            },
+            "url": {
+              "raw": "{{baseUrl}}/api/v1/erp/governance/integrations",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "path": [
+                "api",
+                "v1",
+                "erp",
+                "governance",
+                "integrations"
+              ]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
